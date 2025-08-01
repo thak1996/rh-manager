@@ -1,24 +1,19 @@
-<x-layout-guest pageTitle="Login">
-
+<x-layout-guest pageTitle="Redefinir a senha">
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-4">
-
+            <div class="col-5">
                 <!-- logo -->
                 <div class="text-center mb-5">
                     <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" width="200px">
                 </div>
-
-                <!-- login form -->
+                <!-- redefine password -->
                 <div class="card p-5">
-
-                    <form action="{{ route('login') }}" method="post" novalidate>
+                    <form action="{{ route('password.update') }}" method="post" novalidate>
                         @csrf
-
+                        <input type="hidden" name="token" value="{{ $token }}">
                         <div class="mb-3">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                value="{{ old('email') }}" required>
+                            <input type="email" class="form-control" id="email" name="email" required value="{{ old('email') }}">
                             @error('email')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -32,20 +27,21 @@
                             @enderror
                         </div>
 
+                        <div class="mb-3">
+                            <label for="password_confirmation">Confirmar Senha</label>
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            @error('password_confirmation')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="{{ route('password.request') }}">Esqueceu a sua senha?</a>
-                            <button type="submit" class="btn btn-primary px-4">Entrar</button>
+                            <a href="{{ route('login') }}">Já sei a minha senha?</a>
+                            <button type="submit" class="btn btn-primary px-4">Definir Senha</button>
                         </div>
                     </form>
-                    @if (session('status'))
-                    <div class="alert alert-success mt-3">
-                        {{ session('status') }}
-                    </div>
-                    @endif
                 </div>
-
             </div>
         </div>
     </div>
-
 </x-layout-guest>
