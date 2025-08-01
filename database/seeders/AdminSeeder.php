@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class AdminSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
+        User::truncate();
         DB::table('users')->insert([
             'department_id' => 1,
             'name' => 'Administrador',

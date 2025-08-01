@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,15 @@ Route::get('/email', function () {
     });
 
     echo 'Email sent successfully!';
+});
+
+
+Route::get('/admin', function () {
+    $admin = User::with('detail', 'department')->find(1);
+    return view('admin', compact('admin'));
+});
+
+
+Route::get('/', function () {
+    echo 'Welcome to the application!';
 });
