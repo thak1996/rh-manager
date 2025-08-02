@@ -23,7 +23,6 @@
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-
                         <div class="mb-3">
                             <label for="password">Senha</label>
                             <input type="password" class="form-control" id="password" name="password" required>
