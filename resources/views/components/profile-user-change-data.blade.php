@@ -6,7 +6,7 @@
             <h3>Change user data</h3>
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" name="name" id="name" class="form-control" value="{{ auth()->user()->name }}" required>
+                <input type="text" name="name" id="name" class="form-control" required>
                 @error('name', 'updateProfileInformation')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -14,7 +14,7 @@
 
             <div class="mb-3">
                 <label for="email" class="form-label">Email (Username)</label>
-                <input type="email" name="email" id="email" class="form-control" value="{{ auth()->user()->email }}" required>
+                <input type="email" name="email" id="email" class="form-control" required>
                 @error('email', 'updateProfileInformation')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -25,9 +25,9 @@
             </div>
 
         </form>
-        @if(session('success_change_data'))
+        @if (session('status') === 'profile-information-updated')
         <div class="alert alert-success mt-3">
-            {{ session('success_change_data') }}
+            Profile updated successfully!
         </div>
         @endif
     </div>
