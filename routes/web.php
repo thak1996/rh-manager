@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\RhUserController;
 
 Route::middleware('auth')->group(function () {
     Route::redirect('/', '/home');
@@ -15,4 +16,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/departments/update-department', [DepartmentController::class, 'updateDepartment'])->name('departments.update-department');
     Route::get('/departments/delete-department/{id}', [DepartmentController::class, 'deleteDepartment'])->name('departments.delete-department');
     Route::delete('/departments/delete-department-confirm/{id}', [DepartmentController::class, 'deleteDepartmentConfirm'])->name('departments.delete-department-confirm');
+
+    Route::get('/rh-users', [RhUserController::class, 'index'])->name('colaborators.rh-users');
 });
