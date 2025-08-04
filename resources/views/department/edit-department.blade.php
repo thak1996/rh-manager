@@ -15,7 +15,7 @@
             </div>
             <div class="mb-3">
                 <a href="{{ route('departments') }}" class="btn btn-secondary me-2">Cancel</a>
-                <button type="submit" class="btn btn-primary">Update department</button>
+                <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </form>
     </div>

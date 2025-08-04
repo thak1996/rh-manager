@@ -36,7 +36,7 @@ class DepartmentController extends Controller
     public function editDepartment($id)
     {
         !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
-        if (intval($id) === 1 ) {
+        if (intval($id) === 1) {
             return redirect()->route('departments')->with('error', 'Invalid department ID.');
         }
         $department = Department::findOrFail($id);
@@ -50,16 +50,37 @@ class DepartmentController extends Controller
     {
         !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
         $id = $request->id;
-        if (intval($id) === 1 ) {
+        if (intval($id) === 1) {
             return redirect()->route('departments')->with('error', 'Invalid department ID.');
         }
         $request->validate([
             'id' => 'required',
-            'name' => 'required|string|max:50|unique:departments,name,' . $id,
+            'name' => "required|string|max:50|unique:departments,name,$id",
         ]);
         Department::findOrFail($id)->update([
             'name' => $request->name,
         ]);
+        return redirect()->route('departments');
+    }
+
+    public function deleteDepartment($id)
+    {
+        !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
+        if (intval($id) === 1) {
+            return redirect()->route('departments')->with('error', 'Invalid department ID.');
+        }
+        $department = Department::findOrFail($id);
+        return view('department.delete-department-confirm', compact('department'));
+    }
+
+    public function deleteDepartmentConfirm($id)
+    {
+        !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
+        if (intval($id) === 1) {
+            return redirect()->route('departments');
+        }
+        $department = Department::findOrFail($id);
+        $department->delete();
         return redirect()->route('departments');
     }
 }
