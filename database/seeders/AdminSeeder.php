@@ -14,7 +14,7 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::truncate();
+        User::query()->truncate();
         DB::table('users')->insert([
             'department_id' => 1,
             'name' => 'Administrador',
