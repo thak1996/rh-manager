@@ -5,11 +5,11 @@
         @if($colaborators->count() === 0)
         <div class="text-center my-5">
             <p>No colaborators found.</p>
-            <a href="{{ route('departments.new-department')  }}" class="btn btn-primary">Create a new colaborator</a>
+            <a href="{{ route('colaborators.new-colaborator')  }}" class="btn btn-primary">Create a new colaborator</a>
         </div>
         @else
         <div class="my-3">
-            <a href="{{ route('departments.new-department') }}" class="btn btn-primary">Create a new colaborator</a>
+            <a href="{{ route('colaborators.new-colaborator') }}" class="btn btn-primary">Create a new colaborator</a>
         </div>
         <table class="table w-50" id="table">
             <thead class="table-dark">
