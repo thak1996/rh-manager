@@ -3,9 +3,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-4">
-                    <h3>New Human Resources Colaboratos</h3>
+                    <h3>New Human Resources Colaborator</h3>
                     <hr>
-                    <form action="#" method="post">
+                    <form action="{{ route('colaborators.create-colaborator') }}" method="post">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
@@ -22,12 +22,23 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="select_department" class="form-label">Department</label>
-                            <select class="form-select" name="department" id="department">
-                                @foreach ($departments as $department)
-                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                @endforeach
-                            </select>
+                            <div class="d-flex">
+                                <div class="flex-grow-1 pe-3">
+                                    <label for="select_department" class="form-label">Department</label>
+                                    <select class="form-select" name="select_department" id="select_department">
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('select_department')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <a href="{{ route('departments.new-department') }}"
+                                        class="btn btn-outline-primary mt-4"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
                         </div>
                         <p class="mb-3">Profile: <strong>Human Resources</strong></p>
                         <div class="mb-3">
