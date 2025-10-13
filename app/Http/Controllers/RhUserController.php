@@ -12,7 +12,7 @@ class RhUserController extends Controller
     public function index()
     {
         !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
-        $colaborators = User::where('role', 'rh')->get();
+        $colaborators = User::with('detail')->where('role', 'rh')->get();
         return view('colaborators.rh-users', compact('colaborators'));
     }
     public function newColaborator()
