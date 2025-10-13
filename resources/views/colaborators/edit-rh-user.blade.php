@@ -2,7 +2,7 @@
     <div class="w-100 p-4">
         <h3>Edit Human Resources Colaborator</h3>
         <hr>
-        <form action="{{ route('colaborators.update-colaborator') }}" method="post">
+        <form action="{{ route('colaborators.rh.update-colaborator') }}" method="post">
             @csrf
             <p>
                 Colaborador: <strong>{{ $colaborator->name }} ({{ $colaborator->email }})</strong>
@@ -17,7 +17,7 @@
                                 <input type="number" class="form-control" id="salary" name="salary" step=".01"
                                     placeholder="0,00" value="{{ old('salary', $colaborator->detail->salary) }}">
                                 @error('salary')
-                                    <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                                     placeholder="YYYY-mm-dd"
                                     value="{{ old('admission_date', $colaborator->detail->admission_date) }}">
                                 @error('admission_date')
-                                    <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>

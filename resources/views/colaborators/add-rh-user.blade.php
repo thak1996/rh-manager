@@ -2,7 +2,7 @@
     <div class="w-100 p-4">
         <h3>New Human Resources Colaborator</h3>
         <hr>
-        <form action="{{ route('colaborators.create-colaborator') }}" method="post">
+        <form action="{{ route('colaborators.rh.create-colaborator') }}" method="post">
             @csrf
             <div class="container-fluid">
                 <div class="row gap-3">
@@ -12,7 +12,7 @@
                             <input type="text" class="form-control" id="name" name="name"
                                 value="{{ old('name') }}">
                             @error('name')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -21,7 +21,7 @@
                             <input type="email" class="form-control" id="email" name="email"
                                 value="{{ old('email') }}">
                             @error('email')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -31,13 +31,13 @@
                                     <label for="select_department">Department</label>
                                     <select class="form-select" id="select_department" name="select_department">
                                         @foreach ($departments as $department)
-                                            @if ($department->id == 2)
-                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                            @endif
+                                        @if ($department->id == 2)
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        @endif
                                         @endforeach
                                     </select>
                                     @error('select_department')
-                                        <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div>
@@ -55,7 +55,7 @@
                             <input type="text" class="form-control" id="address" name="address"
                                 value="{{ old('address') }}">
                             @error('address')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -66,7 +66,7 @@
                                     <input type="text" class="form-control" id="zip_code" name="zip_code"
                                         value="{{ old('zip_code') }}">
                                     @error('zip_code')
-                                        <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                     <input type="text" class="form-control" id="city" name="city"
                                         value="{{ old('city') }}">
                                     @error('city')
-                                        <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                     <input type="text" class="form-control" id="phone" name="phone"
                                         value="{{ old('phone') }}">
                                     @error('phone')
-                                        <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                     <input type="number" class="form-control" id="salary" name="salary"
                                         step=".01" placeholder="0,00" value="{{ old('salary') }}">
                                     @error('salary')
-                                        <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                                     <input type="text" class="form-control" id="admission_date" name="admission_date"
                                         placeholder="YYYY-mm-dd" value="{{ old('admission_date') }}">
                                     @error('admission_date')
-                                        <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
