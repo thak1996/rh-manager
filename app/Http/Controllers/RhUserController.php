@@ -36,6 +36,10 @@ class RhUserController extends Controller
             'admission_date' => 'required|date_format:Y-m-d',
         ]);
 
+        if ($request->select_department != 2) {
+            return redirect()->route('home');
+        }
+
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;

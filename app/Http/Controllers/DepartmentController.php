@@ -36,8 +36,8 @@ class DepartmentController extends Controller
     public function editDepartment($id)
     {
         !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
-        if (intval($id) === 1) {
-            return redirect()->route('departments')->with('error', 'Invalid department ID.');
+        if ($this->isDepartmentBlocked($id)) {
+            return redirect()->route('departments');
         }
         $department = Department::findOrFail($id);
         if (!$department) {
@@ -50,8 +50,8 @@ class DepartmentController extends Controller
     {
         !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
         $id = $request->id;
-        if (intval($id) === 1) {
-            return redirect()->route('departments')->with('error', 'Invalid department ID.');
+        if ($this->isDepartmentBlocked($id)) {
+            return redirect()->route('departments');
         }
         $request->validate([
             'id' => 'required',
@@ -66,8 +66,8 @@ class DepartmentController extends Controller
     public function deleteDepartment($id)
     {
         !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
-        if (intval($id) === 1) {
-            return redirect()->route('departments')->with('error', 'Invalid department ID.');
+        if ($this->isDepartmentBlocked($id)) {
+            return redirect()->route('departments');
         }
         $department = Department::findOrFail($id);
         return view('department.delete-department-confirm', compact('department'));
@@ -76,11 +76,16 @@ class DepartmentController extends Controller
     public function deleteDepartmentConfirm($id)
     {
         !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
-        if (intval($id) === 1) {
+        if ($this->isDepartmentBlocked($id)) {
             return redirect()->route('departments');
         }
         $department = Department::findOrFail($id);
         $department->delete();
         return redirect()->route('departments');
+    }
+
+    private function isDepartmentBlocked($id)
+    {
+        return in_array(intval($id), [1, 2]);
     }
 }

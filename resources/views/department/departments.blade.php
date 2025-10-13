@@ -2,10 +2,10 @@
     <div class="w-100 p-4">
         <h3>Departments</h3>
         <hr>
-        @if($departments->count() === 0)
+        @if ($departments->count() === 0)
         <div class="text-center my-5">
             <p>No departments found.</p>
-            <a href="{{ route('departments.new-department')  }}" class="btn btn-primary">Create a new department</a>
+            <a href="{{ route('departments.new-department') }}" class="btn btn-primary">Create a new department</a>
         </div>
         @else
         <div class="my-3">
@@ -17,16 +17,20 @@
                 <th></th>
             </thead>
             <tbody>
-                @foreach($departments as $department)
+                @foreach ($departments as $department)
                 <tr>
                     <td>{{ $department->name }}</td>
                     <td>
                         <div class="d-flex gap-3 justify-content-end">
-                            @if ($department->id === 1)
+                            @if (in_array($department->id, [1,2]))
                             <i class="fa-solid fa-lock"></i>
                             @else
-                            <a href="{{ route('departments.edit-department', $department->id) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-pen-to-square me-2"></i>Edit</a>
-                            <a href="{{ route('departments.delete-department', $department->id) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-trash-can me-2"></i>Delete</a>
+                            <a href="{{ route('departments.edit-department', $department->id) }}"
+                                class="btn btn-sm btn-outline-dark"><i
+                                    class="fa-regular fa-pen-to-square me-2"></i>Edit</a>
+                            <a href="{{ route('departments.delete-department', $department->id) }}"
+                                class="btn btn-sm btn-outline-dark"><i
+                                    class="fa-regular fa-trash-can me-2"></i>Delete</a>
                             @endif
                         </div>
                     </td>
