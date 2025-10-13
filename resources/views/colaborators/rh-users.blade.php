@@ -27,7 +27,7 @@
                             <td>{{ $colaborator->name }}</td>
                             <td>{{ $colaborator->email }}</td>
                             <td>{{ $colaborator->role }}</td>
-                            <td>{{ $colaborator->detail->salary }}</td>
+                            <td>R$ {{ $colaborator->detail->salary }}</td>
                             <td>{{ $colaborator->detail->admission_date }}</td>
                             <td>{{ $colaborator->detail->city }}</td>
                             <td>
@@ -35,7 +35,7 @@
                                     <a href="{{ route('colaborators.edit-colaborator', ['id' => $colaborator->id]) }}"
                                         class="btn btn-sm btn-outline-dark"><i
                                             class="fa-regular fa-pen-to-square me-2"></i>Edit</a>
-                                    <a href="#" class="btn btn-sm btn-outline-dark"><i
+                                    <a href="{{ route('colaborators.delete-colaborator', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i
                                             class="fa-regular fa-trash-can me-2"></i>Delete</a>
                                 </div>
                             </td>
