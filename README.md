@@ -1,66 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RH-Manager
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Gerenciador de RH (skeleton) construído com Laravel 10. Projeto configurado para desenvolvimento via Laravel Sail (Docker), MySQL e Vite para empacotamento de assets.
 
-## About Laravel
+## Sumário rápido
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Backend: Laravel (código em `app/`)
+- Frontend: Vite + assets em `resources/` → compilados para `public/`
+- DB: MySQL via Docker (service name `mysql`)
+- Mail: Mailpit via Docker (porta 8025)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Começando (desenvolvimento)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Copie o arquivo de ambiente e edite valores se necessário:
 
-## Learning Laravel
+```zsh
+cp .env.example .env
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Instale dependências PHP e JS:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```zsh
+composer install
+npm install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Suba os containers (Laravel Sail):
 
-## Laravel Sponsors
+```zsh
+./vendor/bin/sail up -d
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. Execute migrations + seeders (no container):
 
-### Premium Partners
+```zsh
+./vendor/bin/sail artisan migrate --seed
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+5. Rode o servidor Vite (local, watch de assets):
 
-## Contributing
+```zsh
+npm run dev
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. Acesse a aplicação (ajuste `APP_URL` no `.env`) e o Mailpit em `http://localhost:8025`.
 
-## Code of Conduct
+## Estrutura importante
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- `app/Models` — Eloquent models (ex.: `User.php`, `UserDetail.php`, `Department.php`)
+- `app/Actions/Fortify` — Customizações de autenticação/registro do Fortify
+- `app/Http/Controllers` — Controllers HTTP
+- `database/migrations`, `database/seeders`, `database/factories` — migrations, seeders e factories
+- `resources/js`, `resources/css` — frontend; `vite.config.js` configura o bundling
+- `routes/web.php`, `routes/api.php` — rotas
 
-## Security Vulnerabilities
+## Comandos úteis
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Subir containers: `./vendor/bin/sail up -d`
+- Rodar um comando artisan no container: `./vendor/bin/sail artisan <command>`
+- Testes: `./vendor/bin/sail test`
+- Rodar tinker: `./vendor/bin/sail artisan tinker`
 
-## License
+## Integrações e configurações específicas
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Mailpit (dev): service `mailpit` está em `docker-compose.yml`. No `.env` use `MAIL_MAILER=smtp` e `MAIL_HOST=mailpit`.
+- Banco de dados: `DB_HOST=mysql` esperado ao rodar via Sail. A imagem MySQL definida no `docker-compose.yml` inclui healthcheck para indicar prontidão.
+- Xdebug: controlado por `.env` (`SAIL_XDEBUG_MODE`).
+
+## Problemas comuns / Troubleshooting
+
+- Erro `could not find driver` ao rodar `php artisan migrate`: normalmente ocorre porque você executou `php` no host e não dentro do container Sail. Use `./vendor/bin/sail artisan migrate` ou instale `pdo_mysql` no PHP do host (`php8.x-mysql`).
+- Se MySQL estiver indisponível no container, verifique `./vendor/bin/sail ps` e os logs `./vendor/bin/sail logs mysql`.
+- Erros de assets: rode `npm run dev` para desenvolvimento ou `npm run build` para produção (ver `package.json`).
+
+## Convenções do projeto
+
+- Relações Eloquent seguem `hasOne`/`belongsTo` (veja `User::detail()` e `User::department()`).
+- Overwrites do Fortify estão em `app/Actions/Fortify` (ponto de entrada para fluxos de autenticação customizados).
+
+## Testes
+
+Rodar test suite:
+
+```zsh
+./vendor/bin/sail test
+```
+
+Se testes falharem por questões de banco, verifique se os seeders/migrations foram aplicados no ambiente de teste.
+
+---
+
+Se quiser, eu posso:
+
+- Adicionar exemplos de `Makefile`/`tasks.json` para simplificar comandos comuns;
+- Incluir instruções para rodar localmente sem Docker (lista de pacotes PHP necessários);
+- Expandir a seção de troubleshooting com logs e comandos de diagnóstico.
+
+Por favor me diga se prefere o README em inglês ou com mais detalhes de deploy/CI.
