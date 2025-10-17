@@ -3,6 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\RhUserController;
+use App\Http\Controllers\ConfirmAccountController;
+
+Route::middleware('guest')->group(function () {
+    Route::get('/confirm-account/{token}', [ConfirmAccountController::class, 'confirmAccount'])->name('confirm-account');
+    Route::get('/confirm-account', [ConfirmAccountController::class, 'confirmAccountSubmit'])->name('confirm-account-submit');
+});
 
 Route::middleware('auth')->group(function () {
     Route::redirect('/', '/home');
