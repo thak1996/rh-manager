@@ -30,10 +30,12 @@
                                 <div class="flex-grow-1 pe-3">
                                     <label for="select_department">Department</label>
                                     <select class="form-select" id="select_department" name="select_department">
+                                        <option value="">Selecione um departamento</option>
                                         @foreach ($departments as $department)
-                                        @if ($department->id == 2)
-                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                        @endif
+                                        <option value="{{ $department->id }}"
+                                            {{ old('select_department') == $department->id ? 'selected' : '' }}>
+                                            {{ $department->name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                     @error('select_department')
