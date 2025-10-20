@@ -11,7 +11,7 @@ class ColaboratorsController extends Controller
     public function index()
     {
         !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
-        $colaborators = User::with('detail', 'department')->where('role', '<>', 'admin')->get();
+        $colaborators = User::withTrashed()->with('detail', 'department')->where('role', '<>', 'admin')->get();
         return view('colaborators.admin-all-colaborators', compact('colaborators'));
     }
 
@@ -42,5 +42,12 @@ class ColaboratorsController extends Controller
         $colaborator = User::findOrFail($id);
         $colaborator->delete();
         return redirect()->route('colaborators.all-colaborators')->with('success', 'Colaborator deleted successfully.');
+    }
+    public function restoreColaborator($id)
+    {
+        !Auth::user()->is_admin ?: abort(403, 'Unauthorized action.');
+        $colaborator = User::withTrashed()->findOrFail($id);
+        $colaborator->restore();
+        return redirect()->route('colaborators.all-colaborators')->with('success', 'Colaborator restored successfully.');
     }
 }
